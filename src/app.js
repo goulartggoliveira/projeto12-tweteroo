@@ -33,7 +33,7 @@ server.post("/tweets", (req, res) => {
   const { tweet } = req.body;
 
   if (!user) {
-    res.status(400).send({ error: "Envie o username" });
+    res.status(400).send({ error: "UNAUTHORIZED" });
     return;
   }
   if (!tweet) {
@@ -44,6 +44,17 @@ server.post("/tweets", (req, res) => {
   tweets.push({ username: user, tweet });
 
   res.status(201).send({ message: "OK!" });
+});
+
+server.get("/tweets", (req, res) => {
+  tweets.forEach((tweet) => {
+    const { avatar } = users.find((user) => user.username === tweet.username);
+    tweet.avatar = avatar;
+  });
+
+  res.send(tweets.slice(-10).reverse());
+
+  //   res.send(tweets);
 });
 
 server.listen(5000, () => console.log("Servidor funcionando na porta: 5000"));
