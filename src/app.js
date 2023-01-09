@@ -28,4 +28,22 @@ server.post("/sign-up", (req, res) => {
   res.send("OK!");
 });
 
+server.post("/tweets", (req, res) => {
+  const { user } = req.headers;
+  const { tweet } = req.body;
+
+  if (!user) {
+    res.status(400).send({ error: "Envie o username" });
+    return;
+  }
+  if (!tweet) {
+    res.status(400).send({ error: "Envie um tweet!" });
+    return;
+  }
+
+  tweets.push({ username: user, tweet });
+
+  res.status(201).send({ message: "OK!" });
+});
+
 server.listen(5000, () => console.log("Servidor funcionando na porta: 5000"));
