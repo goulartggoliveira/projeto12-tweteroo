@@ -33,7 +33,7 @@ server.post("/tweets", (req, res) => {
   const { tweet } = req.body;
 
   if (!user) {
-    res.status(400).send({ error: "UNAUTHORIZED" });
+    res.sendStatus(401);
     return;
   }
   if (!tweet) {
@@ -52,7 +52,9 @@ server.get("/tweets", (req, res) => {
     tweet.avatar = avatar;
   });
 
-  res.send(tweets.slice(-10).reverse());
+  const newTweets = [...tweets];
+
+  res.send(newTweets.slice(-10).reverse());
 
   //   res.send(tweets);
 });
