@@ -30,6 +30,28 @@ app.post(`/sign-up`, (req, res) => {
     res.status(201).send("OK")
 })
 
+app.post(`/tweets`, (req, res) => {
+    const { user} = req.headers
+    const { tweets } = req.body
+
+    if (!user){
+        res.status(400).send("UNAUTHORIZED")
+    }
+    if (!tweet){
+        res.status(400).send("UNAUTHORIZED")
+    }
+    const userExist = users.find((u) => u.username === user)
+
+    if (!userExist){
+        res.status(401).send("UNAUTHORIZED")
+    }
+
+    tweets.push({username: user, tweet})
+
+    res.status(200).send("OK")
+
+})
+
 app.get(`/sign-up`, (req, res) => {
     res.send(users)
 })
