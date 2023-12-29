@@ -37,7 +37,7 @@ app.post(`/tweets`, (req, res) => {
     if (!user){
         res.status(400).send("UNAUTHORIZED")
     }
-    if (!tweet){
+    if (!tweets){
         res.status(400).send("UNAUTHORIZED")
     }
     const userExist = users.find((u) => u.username === user)
@@ -48,15 +48,17 @@ app.post(`/tweets`, (req, res) => {
 
     tweets.push({username: user, tweet})
 
-    res.status(200).send("OK")
+    res.status(201).send("OK")
 
 })
 
-app.get(`/sign-up`, (req, res) => {
-    res.send(users)
+app.get(`/tweets`, (req, res) => {
+    tweets.forEach((tweet) => {
+        const {avatar} = users.find((u) => u.username === tweet.username);
+        tweet.avatar = avatar
+    })
+
+    res.send(tweets.slice(-10).reverse())
 })
-
-
-
 app.listen(5000, () => console.log('listening on port 5000'));
 
