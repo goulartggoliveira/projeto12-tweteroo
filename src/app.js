@@ -32,13 +32,13 @@ app.post(`/sign-up`, (req, res) => {
 
 app.post(`/tweets`, (req, res) => {
     const { user} = req.headers
-    const { tweets } = req.body
+    const { tweet } = req.body
 
     if (!user){
-        res.status(400).send("UNAUTHORIZED")
+        res.status(400).send({ error: "UNAUTHORIZED" })
     }
     if (!tweets){
-        res.status(400).send("UNAUTHORIZED")
+        res.status(400).send({ error: "UNAUTHORIZED" })
     }
     const userExist = users.find((u) => u.username === user)
 
@@ -46,9 +46,9 @@ app.post(`/tweets`, (req, res) => {
         res.status(401).send("UNAUTHORIZED")
     }
 
-    tweets.push({username: user, tweet})
+    tweets.push({ username: user, tweet })
 
-    res.status(201).send("OK")
+    res.status(201).send({ message: "OK" })
 
 })
 
