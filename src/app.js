@@ -9,7 +9,7 @@ app.use(express.json());
 const users = [];
 
 const tweets = [];
-
+const logout = []
 
 app.post(`/sign-up`, (req, res) => {
 
